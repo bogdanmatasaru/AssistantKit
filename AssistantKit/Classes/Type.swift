@@ -103,10 +103,10 @@ public enum Version: String {
         case .phoneX,
              .phoneXS:
             return .inches_5_8
-
+            
         case .phoneXR:
             return .inches_6_1
-
+            
         case .phoneXSMax:
             return .inches_6_5
             
@@ -142,7 +142,8 @@ extension Device {
         uname(&systemInfo)
 
         if  let info = NSString(bytes: &systemInfo.machine, length: Int(_SYS_NAMELEN), encoding: String.Encoding.ascii.rawValue),
-            let code = String(validatingUTF8: info.utf8String!) {
+            let code = String(validatingUTF8: info.utf8String!)
+        {
             return code
         }
 
@@ -154,6 +155,7 @@ extension Device {
     /// - seealso: Type
     static public var type: Type {
         let versionCode = Device.versionCode
+
         if versionCode.starts(with: "iPhone") {
             return .phone
         } else if versionCode.starts(with: "iPad") {
@@ -177,9 +179,18 @@ extension Device {
     }
 
     /// Return `true` for iPhoneX
-    @available(*, deprecated: 0.5, message: ".isPhoneX deprecated. Use .isNotched instead")
     static public var isPhoneX: Bool {
         return isPhone && screen == .inches_5_8
+    }
+    
+    /// Return `true` for iPhoneXSMax
+    static public var isPhoneXSMax: Bool {
+        return isPhone && screen == .inches_6_5
+    }
+    
+    /// Return `true` for iPhoneXSMax
+    static public var isPhoneXR: Bool {
+        return isPhone && screen == .inches_6_1
     }
 
     /// Return `true` for iPadPro
@@ -191,10 +202,14 @@ extension Device {
     static public var isSimulator: Bool {
         return type == .simulator
     }
-
+    
     /// Return `true` if device has a notch
     static public var isNotched: Bool {
-        return isPhone && (screen == .inches_5_8 || screen == .inches_6_1 || screen == .inches_6_5)
+        if isPhoneXSMax || isPhoneX || isPhoneXR {
+            return true
+        } else {
+            return false
+        }
     }
 
     // MARK: Version
@@ -246,15 +261,15 @@ extension Device {
         case "iPhone10,2", "iPhone10,5":
             return .phone8Plus
 
-        case "iPhone10,3", "iPhone10,6":
+        case "iPhone10,3":
             return .phoneX
-
+            
         case "iPhone11,2":
             return .phoneXS
-
+            
         case "iPhone11,4", "iPhone11,6":
             return .phoneXSMax
-
+            
         case "iPhone11,8":
             return .phoneXR
 

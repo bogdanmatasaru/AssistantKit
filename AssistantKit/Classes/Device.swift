@@ -141,12 +141,6 @@ import UIKit
 /// Device.isPortrait  // true if portrait
 /// ```
 ///
-/// To detect slide over layout on iPads just call:
-///
-/// ```
-/// Device.isSlideOverLayout // true if iPad is in multitasking / slide over layout
-/// ```
-///
 /// **Detecting iOS version**
 ///
 /// You can detect iOS version in runtime. There are 5 different methods that will help you to
@@ -179,6 +173,7 @@ public struct Device {
 
 /// Detecting device state
 extension Device {
+
     /// Return `true` for landscape interface orientation
     static public var isLandscape: Bool {
         return ( UIApplication.shared.statusBarOrientation == .landscapeLeft
@@ -193,7 +188,9 @@ extension Device {
 
 /// Battery state
 extension Device {
+    
     public struct Battery {
+        
         /// Return battery state
         static public var state: UIDevice.BatteryState {
             enableBatteryMonitoringIfNecessary()
@@ -210,15 +207,5 @@ extension Device {
             guard !UIDevice.current.isBatteryMonitoringEnabled else { return }
             UIDevice.current.isBatteryMonitoringEnabled = true
         }
-    }
-}
-
-/// Multitasking / Slide Over for iPad
-extension Device {
-    /// Return `true` is iPad is in multitasking / slide over layout mode
-    static public var isSlideOverLayout: Bool {
-        guard Device.isPad else { return false }
-        guard let rootWindow = UIApplication.shared.delegate?.window, let window = rootWindow else { return false }
-        return !window.frame.equalTo(window.screen.bounds)
     }
 }

@@ -55,27 +55,22 @@ public enum Screen: CGFloat {
 /// Comparing Screen and Screen
 
 public func ==(lhs: Screen, rhs: Screen) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue == rhs.rawValue
 }
 
 public func <(lhs: Screen, rhs: Screen) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue < rhs.rawValue
 }
 
 public func >(lhs: Screen, rhs: Screen) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue > rhs.rawValue
 }
 
 public func <=(lhs: Screen, rhs: Screen) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue <= rhs.rawValue
 }
 
 public func >=(lhs: Screen, rhs: Screen) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue >= rhs.rawValue
 }
 
@@ -130,27 +125,22 @@ public enum Scale: CGFloat, Comparable, Equatable {
 }
 
 public func ==(lhs: Scale, rhs: Scale) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue == rhs.rawValue
 }
 
 public func <(lhs: Scale, rhs: Scale) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue < rhs.rawValue
 }
 
 public func >(lhs: Scale, rhs: Scale) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
-    return lhs.rawValue > rhs.rawValue
+    return lhs.rawValue < rhs.rawValue
 }
 
 public func <=(lhs: Scale, rhs: Scale) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue <= rhs.rawValue
 }
 
 public func >=(lhs: Scale, rhs: Scale) -> Bool {
-    guard lhs.rawValue > 0 && rhs.rawValue > 0 else { return false }
     return lhs.rawValue >= rhs.rawValue
 }
 
@@ -179,7 +169,7 @@ extension Device {
 
         case 812:
             return .inches_5_8
-
+            
         case 896:
             return ( scale == .x3 ? .inches_6_5 : .inches_6_1 )
 
@@ -294,7 +284,7 @@ extension Device {
                 return value
             }
 
-            let actualDistance = abs(key.rawValue - screen.rawValue)
+            let actualDistance = fabs(key.rawValue - screen.rawValue)
             if actualDistance < distance {
                 nearestValue = value
                 distance = actualDistance
